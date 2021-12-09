@@ -15,7 +15,7 @@
 	)
 	(
 		// Users to add ports here
-
+        output wire [5:0] status,
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -117,6 +117,11 @@
 	integer	 byte_index;
 	reg	 aw_en;
 
+    // Add extra user logic register here
+    
+    wire [C_S_AXI_DATA_WIDTH-1:0]    target_o;
+    wire [C_S_AXI_DATA_WIDTH-1:0]    status_o;
+    
 	// I/O Connections assignments
 
 	assign S_AXI_AWREADY	= axi_awready;
@@ -405,8 +410,8 @@
 	        3'h2   : reg_data_out <= slv_reg2;
 	        3'h3   : reg_data_out <= slv_reg3;
 	        3'h4   : reg_data_out <= slv_reg4;
-	        3'h5   : reg_data_out <= slv_reg5;
-	        3'h6   : reg_data_out <= slv_reg6;
+	        3'h5   : reg_data_out <= target_o;
+	        3'h6   : reg_data_out <= status_o;
 	        default : reg_data_out <= 0;
 	      endcase
 	end
@@ -432,6 +437,22 @@
 
 	// Add user logic here
 
+    assign status = {status_o[0],status_o[1],status_o[2],status_o[3],status_o[4],status_o[5]};
+       
+    driver driver (
+ 
+       .CLK(S_AXI_ACLK),
+       .CPU_RESETN(S_AXI_ARESETN),
+       .target_selected({slv_reg3,slv_reg2,slv_reg1,slv_reg0}),
+       .enable_switch(slv_reg4[0]),
+       .target(target_o),
+       .status_paused(status_o[0]),
+       .status_running(status_o[1]),
+       .status_warming(status_o[2]),
+       .status_found(status_o[3]),
+       .status_done(status_o[4]),
+       .enabled(status_o[5])
+    ); 
 	// User logic ends
 
 	endmodule

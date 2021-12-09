@@ -15,7 +15,7 @@
 	)
 	(
 		// Users to add ports here
-
+        output wire [5:0] status,
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -48,6 +48,7 @@
 		.C_S_AXI_DATA_WIDTH(C_S_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH)
 	) ip_md5_v1_0_S_AXI_inst (
+	    .status(status),
 		.S_AXI_ACLK(s_axi_aclk),
 		.S_AXI_ARESETN(s_axi_aresetn),
 		.S_AXI_AWADDR(s_axi_awaddr),
