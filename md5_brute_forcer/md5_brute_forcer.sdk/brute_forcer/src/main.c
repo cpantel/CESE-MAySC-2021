@@ -34,6 +34,14 @@ void setHash00000200() {
 	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, 0x39d0c869);
 }
 
+void setHash00000201() {
+        // e551bba285ac1be5eb49d8030c49a274
+        //
+        MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG3_OFFSET, 0xe551bba2);
+        MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG2_OFFSET, 0x85ac1be5);
+        MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG1_OFFSET, 0xeb49d803);
+        MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, 0x0c49a274);
+}
 
 void setHash00010000() {
 	// 03bf3e510fa084f991c7a5e607d9712b
@@ -86,7 +94,7 @@ void selfTest() {
 
 void printStatus(const char * tab) {
         unsigned int status = readStatus();
-        printf("status %s: ",tab);
+        printf("%s",tab);
         if (status & 0x1)  printf("paused ");
         if (status & 0x2)  printf("running ");
         if (status & 0x4)  printf("warming ");
@@ -108,7 +116,6 @@ int isFound() {
 	return (status & 0x8);
 }
 
-
 void printFullStatus(const char * title, const char * tab) {
 	printf("%s ",title);
 	printStatus(tab);
@@ -122,97 +129,98 @@ void longDelay() {
         for (int i=0; i<599999999; i++);
 }
 
-
-void checkOne(const char* msg, void * f) {
-	printf(msg);
-    delay();
-	f;
-	enable();
-	printFullStatus("just enabled\r\n","   ");
-	disable();
-	printFullStatus("just disabled\r\n","   ");
-	printf("   target %x\r\n",readTarget());
-
+void printResults() {
+    if (isFound()) {
+    	printf("  found %x\r\n\r\n", readTarget());
+    } else {
+    	printf("  not found\r\n\r\n");
+    }
 }
 
+void wait() {
+	int count = 0;
+    while ( ! isDone()) {
+        delay();
+        ++count;
+    }
+	printf("  waited %d\r\n", count);
+ }
 
 int main(void) {
         selfTest();
+
+
+        printf("searching for 00000200...\r\n");
         disable();
-        printStatus(" - ");
         setHash00000200();
-        printStatus(" - ");
+        printStatus("  status:");
         enable();
-        while ( ! isDone()) {
-            delay();
-            printf("waiting...\r\n");
-            printStatus("  ");
-        }
-        if (isFound()) {
-        	printf("target value %x\r\n", readTarget());
-        } else {
-        	printf("not found\r\n");
-        }
+        printStatus("  status:");
+        wait();
+        printStatus("  status:");
+        printResults();
         disable();
 
-        printStatus(" - ");
+        printf("searching for 00000201...\r\n");
+        disable();
+        setHash00000201();
+        printStatus("  status:");
+        enable();
+        printStatus("  status:");
+        wait();
+        printStatus("  status:");
+        printResults();
+        disable();
+
+        printf("searching for 00010000...\r\n");
+        disable();
         setHash00010000();
+        printStatus("  status:");
         enable();
-        while ( ! isDone()) {
-            delay();
-            printf("waiting...\r\n");
-            printStatus("  ");
-        }
-        if (isFound()) {
-        	printf("target value %x\r\n", readTarget());
-        } else {
-        	printf("not found\r\n");
-        }
+        printStatus("  status:");
+        wait();
+        printStatus("  status:");
+        printResults();
         disable();
 
-        printStatus(" - ");
+        printf("searching for 01020304...\r\n");
+        disable();
         setHash01020304();
+        printStatus("  status:");
         enable();
-        while ( ! isDone()) {
-                delay();
-                printf("waiting...\r\n");
-                printStatus("  ");
-        }
-        if (isFound()) {
-        	printf("target value %x\r\n", readTarget());
-        } else {
-        	printf("not found\r\n");
-        }
-        disable();
-        enable();
-        printStatus(" - ");
-        setHashf0000000();
-        while ( ! isDone()) {
-        	longDelay();
-            printf("waiting...\r\n");
-            printStatus("  ");
-        }
-        if (isFound()) {
-        	printf("target value %x\r\n", readTarget());
-        } else {
-        	printf("not found\r\n");
-        }
+        printStatus("  status:");
+        wait();
+        printStatus("  status:");
+        printResults();
         disable();
 
-        printStatus(" - ");
-        setHashffffffff();
-        enable();
-        while ( ! isDone()) {
-            longDelay();
-            printf("waiting...\r\n");
-            printStatus("  ");
-        }
-        if (isFound()) {
-        	printf("target value %x\r\n", readTarget());
-        } else {
-        	printf("not found\r\n");
-        }
+
+        printf("searching for f0000000...\r\n");
         disable();
+        setHashf0000000();
+        printStatus("  status:");
+        enable();
+        printStatus("  status:");
+        wait();
+        printStatus("  status:");
+        printResults();
+        disable();
+
+        printf("searching for ffffffff...\r\n");
+        disable();
+        setHashffffffff();
+        printStatus("  status:");
+        enable();
+        printStatus("  status:");
+        wait();
+        printStatus("  status:");
+        printResults();
+        disable();
+
+
+        printf("idle\r\n");
+        while (1) {}
+
 
         return 0;
 }
