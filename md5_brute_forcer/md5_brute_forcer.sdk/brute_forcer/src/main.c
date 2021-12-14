@@ -18,74 +18,12 @@ unsigned int readTarget() {
         return MD5_ACCELERATOR_mReadReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG5_OFFSET );
 }
 
-void setHash00000100() {
-	// 2ab4b906fabd1c154d3d8fd77942028e
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG3_OFFSET, 0x2ab4b906);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG2_OFFSET, 0xfabd1c15);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG1_OFFSET, 0x4d3d8fd7);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, 0x7942028e);
+void setHash(unsigned int r3, unsigned int r2, unsigned int r1,unsigned int r0) {
+	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG3_OFFSET, r3);
+	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG2_OFFSET, r2);
+	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG1_OFFSET, r1);
+	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, r0);
 }
-
-void setHash00000200() {
-	// 33eba1e7a037d9c4bb54e60d39d0c869
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG3_OFFSET, 0x33eba1e7);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG2_OFFSET, 0xa037d9c4);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG1_OFFSET, 0xbb54e60d);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, 0x39d0c869);
-}
-
-void setHash00000201() {
-        // e551bba285ac1be5eb49d8030c49a274
-        //
-        MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG3_OFFSET, 0xe551bba2);
-        MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG2_OFFSET, 0x85ac1be5);
-        MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG1_OFFSET, 0xeb49d803);
-        MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, 0x0c49a274);
-}
-
-void setHash00010000() {
-	// 03bf3e510fa084f991c7a5e607d9712b
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG3_OFFSET, 0x03bf3e51);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG2_OFFSET, 0x0fa084f9);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG1_OFFSET, 0x91c7a5e6);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, 0x07d9712b);
-}
-
-void setHash01020304() {
-	// 08d6c05a21512a79a1dfeb9d2a8f262f
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG3_OFFSET, 0x08d6c05a);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG2_OFFSET, 0x21512a79);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG1_OFFSET, 0xa1dfeb9d);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, 0x2a8f262f);
-}
-
-
-void setHashffffffff() {
-	// a54f0041a9e15b050f25c463f1db7449
-	//
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG3_OFFSET, 0xa54f0041);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG2_OFFSET, 0xa9e15b05);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG1_OFFSET, 0x0f25c463);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, 0xf1db7449);
-}
-
-void setHashf0000000() {
-	// 0290a09d67739bb3a69914532acfaf2d
-	//
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG3_OFFSET, 0x0290a09d);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG2_OFFSET, 0x67739bb3);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG1_OFFSET, 0xa6991453);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, 0x2acfaf2d);
-}
-
-/*
-void setHash() {
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG3_OFFSET, 0x);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG2_OFFSET, 0x);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG1_OFFSET, 0x);
-	MD5_ACCELERATOR_mWriteReg(XPAR_MD5_ACCELERATOR_0_S_AXI_BASEADDR, MD5_ACCELERATOR_S_AXI_SLV_REG0_OFFSET, 0x);
-}
-*/
 
 void selfTest() {
 	printf("MD5 Brute Forcer SelfTest\r\n");
@@ -122,11 +60,11 @@ void printFullStatus(const char * title, const char * tab) {
 }
 
 void delay() {
-        for (int i=0; i<59999999; i++);
+    for (int i=0; i<59999999; i++);
 }
 
 void longDelay() {
-        for (int i=0; i<599999999; i++);
+    for (int i=0; i<599999999; i++);
 }
 
 void printResults() {
@@ -147,80 +85,82 @@ void wait() {
  }
 
 int main(void) {
-        selfTest();
+
+	// setHash(0x2ab4b906, 0xfabd1c15, 0x4d3d8fd7, 0x7942028e); // 00000100
+	selfTest();
 
 
-        printf("searching for 00000200...\r\n");
-        disable();
-        setHash00000200();
-        printStatus("  status:");
-        enable();
-        printStatus("  status:");
-        wait();
-        printStatus("  status:");
-        printResults();
-        disable();
+	printf("searching for 00000200...\r\n");
+	disable();
+	setHash(0x33eba1e7, 0xa037d9c4, 0xbb54e60d, 0x39d0c869); // 00000200
+	printStatus("  status:");
+	enable();
+	printStatus("  status:");
+	wait();
+	printStatus("  status:");
+	printResults();
+	disable();
 
-        printf("searching for 00000201...\r\n");
-        disable();
-        setHash00000201();
-        printStatus("  status:");
-        enable();
-        printStatus("  status:");
-        wait();
-        printStatus("  status:");
-        printResults();
-        disable();
+	printf("searching for 00000201...\r\n");
+	disable();
+	setHash(0xe551bba2, 0x85ac1be5, 0xeb49d803, 0x0c49a274); // 00000201
+	printStatus("  status:");
+	enable();
+	printStatus("  status:");
+	wait();
+	printStatus("  status:");
+	printResults();
+	disable();
 
-        printf("searching for 00010000...\r\n");
-        disable();
-        setHash00010000();
-        printStatus("  status:");
-        enable();
-        printStatus("  status:");
-        wait();
-        printStatus("  status:");
-        printResults();
-        disable();
+	printf("searching for 00010000...\r\n");
+	disable();
+	setHash(0x03bf3e51, 0x0fa084f9, 0x91c7a5e6, 0x07d9712b); //h00010000
+	printStatus("  status:");
+	enable();
+	printStatus("  status:");
+	wait();
+	printStatus("  status:");
+	printResults();
+	disable();
 
-        printf("searching for 01020304...\r\n");
-        disable();
-        setHash01020304();
-        printStatus("  status:");
-        enable();
-        printStatus("  status:");
-        wait();
-        printStatus("  status:");
-        printResults();
-        disable();
-
-
-        printf("searching for f0000000...\r\n");
-        disable();
-        setHashf0000000();
-        printStatus("  status:");
-        enable();
-        printStatus("  status:");
-        wait();
-        printStatus("  status:");
-        printResults();
-        disable();
-
-        printf("searching for ffffffff...\r\n");
-        disable();
-        setHashffffffff();
-        printStatus("  status:");
-        enable();
-        printStatus("  status:");
-        wait();
-        printStatus("  status:");
-        printResults();
-        disable();
+	printf("searching for 01020304...\r\n");
+	disable();
+	setHash(0x08d6c05a, 0x21512a79, 0xa1dfeb9d, 0x2a8f262f); //01020304
+	printStatus("  status:");
+	enable();
+	printStatus("  status:");
+	wait();
+	printStatus("  status:");
+	printResults();
+	disable();
 
 
-        printf("idle\r\n");
-        while (1) {}
+	printf("searching for f0000000...\r\n");
+	disable();
+	setHash(0x0290a09d, 0x67739bb3, 0xa6991453, 0x2acfaf2d); //f0000000
+	printStatus("  status:");
+	enable();
+	printStatus("  status:");
+	wait();
+	printStatus("  status:");
+	printResults();
+	disable();
+
+	printf("searching for ffffffff...\r\n");
+	disable();
+	setHash(0xa54f0041, 0xa9e15b05, 0x0f25c463, 0xf1db7449); //ffffffff
+	printStatus("  status:");
+	enable();
+	printStatus("  status:");
+	wait();
+	printStatus("  status:");
+	printResults();
+	disable();
 
 
-        return 0;
+	printf("idle\r\n");
+	while (1) {}
+
+
+	return 0;
 }
