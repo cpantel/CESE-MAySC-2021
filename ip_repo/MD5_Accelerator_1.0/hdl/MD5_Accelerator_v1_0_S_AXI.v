@@ -4,7 +4,7 @@
 	module MD5_Accelerator_v1_0_S_AXI #
 	(
 		// Users to add parameters here
-
+        parameter integer PIPELINES = 1,
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -438,7 +438,7 @@
 	// Add user logic here
     assign status = {status_o[0],status_o[1],status_o[2],status_o[3],status_o[4],status_o[5]};
     
-    driver driver (
+    driver #(.PIPELINES(PIPELINES)) driver (
         .CLK(S_AXI_ACLK),
         .CPU_RESETN(S_AXI_ARESETN),
         .target_selected({slv_reg3,slv_reg2,slv_reg1,slv_reg0}),
@@ -449,7 +449,10 @@
         .status_warming(status_o[2]),
         .status_found(status_o[3]),
         .status_done(status_o[4]),
-        .enabled(status_o[5])
+        .enabled(status_o[5]),
+        .version(status_o[11:8]),
+        .pipelines(status_o[15:12]),
+        .each_found(status_o[31:16])
     ); 
 	// User logic ends
 

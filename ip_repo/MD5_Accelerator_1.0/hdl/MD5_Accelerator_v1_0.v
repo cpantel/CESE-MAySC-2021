@@ -4,7 +4,7 @@
 	module MD5_Accelerator_v1_0 #
 	(
 		// Users to add parameters here
-        
+        parameter integer PIPELINES = 1,
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -46,7 +46,8 @@
 // Instantiation of Axi Bus Interface S_AXI
 	MD5_Accelerator_v1_0_S_AXI # ( 
 		.C_S_AXI_DATA_WIDTH(C_S_AXI_DATA_WIDTH),
-		.C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH)
+		.C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH),
+		.PIPELINES(PIPELINES)
 	) MD5_Accelerator_v1_0_S_AXI_inst (
 	    .status(status),
 		.S_AXI_ACLK(s_axi_aclk),

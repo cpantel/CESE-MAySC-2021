@@ -5,7 +5,7 @@ module warmup_counter
    input enable,
    output reg done
 );
-
+// actual
 reg [7:0]count;
 
 always @(posedge CLK) 
@@ -14,7 +14,7 @@ begin
     count      <= 8'b00000000;
     done       <= 1'b0;
   end else begin
-    if (count == 8'b00010000)
+    if (count == 8'b00001000)
       done    <= 1;
     else if (enable & ! done) 
       count   <= count + 1;

@@ -1,4 +1,8 @@
-module driver(
+module driver #
+	(
+		// Users to add parameters here
+        parameter integer PIPELINES = 1
+    ) (
   input          CLK,
   input          CPU_RESETN,
   input          enable_switch,
@@ -9,27 +13,34 @@ module driver(
   output reg     status_warming,
   output reg     status_found,
   output reg     status_done,
-  output         enabled
+  output [4:0]   pipelines,
+  output [(PIPELINES - 1):0] each_found,
+  output [3:0]   version,
+  output         enabled  
 );
+localparam hdl_version          = 4'b0001;
+localparam state_start          = 4'b0001;
+localparam state_warm_up        = 4'b0010;
+localparam state_running        = 4'b0100;
+localparam state_done           = 4'b1000;
 
-parameter state_start          = 4'b0001;
-parameter state_warm_up        = 4'b0010;
-parameter state_running        = 4'b0100;
-parameter state_done           = 4'b1000;
+wire                      counter_done;
+wire [31:0]               counter_out;
+wire [31:0]               counter_full;
+wire                      found;
+wire                      warming_up_done;
+wire                      reset;
+reg                       reset_counter;
+reg  [3:0]                state;
 
-wire        counter_done;
-wire [30:0] counter_out;
-wire        found, found0, found1; //, found2, found3;
-wire        warming_up_done;
-wire        reset;
-reg         reset_counter;
-reg  [7:0]  state;
-
-assign target        = {counter_out,1'b0}; //3'b000
+assign target        = counter_out; 
 assign enabled       = enable_switch;
-assign found         = (found0 | found1);// | found2 | found3);
+assign found         = |each_found;
 assign reset         = !CPU_RESETN;
 assign status_paused = !status_running;
+assign pipelines     = PIPELINES;
+assign version       = hdl_version;
+
 
 always @(posedge CLK) begin
   if (reset) begin
@@ -38,7 +49,7 @@ always @(posedge CLK) begin
      status_warming  <= 1'b0;
      status_found    <= 1'b0;
      status_done     <= 1'b0;
-     reset_counter   <= 1'b1;     
+     reset_counter   <= 1'b1;
   end else begin
      case (state)
         state_start : begin
@@ -131,40 +142,24 @@ warmup_counter u_warm_upcounter(
    .done(warming_up_done)
 );
 
-counter counter(.CLK(CLK),
+counter #( .STEP(PIPELINES) ) counter (.CLK(CLK),
   .reset(reset | reset_counter),
-  .step(0),
   .enable(!status_paused),
   .counter_out(counter_out),
   .done(counter_done)
 );
 
-pipeline pipeline0(.CLK(CLK),
-  .counter_in({counter_out,1'b0}),
-  .target_hash(target_selected),
-  .reset(reset),
-  .found(found0)
-);
+genvar idx;
 
-pipeline pipeline1(.CLK(CLK),
-  .counter_in({counter_out,1'b1}),
-  .target_hash(target_selected),
-  .reset(reset),
-  .found(found1)
-);
-/*
-pipeline pipeline2(.CLK(CLK),
-  .counter_in({counter_out,3'b010}),
-  .target_hash(target_selected),
-  .reset(reset),
-  .found(found2)
-);
+generate
+  for (idx = 0; idx < PIPELINES; idx = idx + 1) begin
+    pipeline pipeline(.CLK(CLK),
+      .counter_in( counter_out | idx ),
+      .target_hash(target_selected),
+      .reset(reset | reset_counter),
+      .found(each_found[idx])
+    );
+  end
+endgenerate
 
-pipeline pipeline3(.CLK(CLK),
-  .counter_in({counter_out,3'b011}),
-  .target_hash(target_selected),
-  .reset(reset),
-  .found(found3)
-);
-*/
 endmodule

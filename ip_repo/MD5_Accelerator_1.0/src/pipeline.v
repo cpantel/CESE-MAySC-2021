@@ -950,8 +950,10 @@ end
 always @(posedge CLK)
 begin
   if (reset)
-    found <= 1'h0;
+    found <= 1'b0;
   else if ( hash == target_hash)
+    found <= 1'b1;
+  else if ( found )
     found <= 1'b1;
   else 
     found <= 1'b0;

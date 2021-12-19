@@ -1,18 +1,16 @@
-module counter(
+module counter # (
+    parameter integer STEP = 1
+)(
    input CLK,
    input reset,
    input enable,
-   input step,
-   output [30:0] counter_out,   // 28
+   output [31:0] counter_out,
    output reg running,
    output reg done
 );
 
-reg [31:0] count;                   // 29
-assign counter_out = count[30:0];   // 28
-initial count   = 0;
-initial running = 0;
-initial done    = 0;
+reg [32:0] count;
+assign counter_out = count[31:0];
 
 always @(posedge CLK) 
 begin
@@ -22,21 +20,15 @@ begin
     running <= 0;
     done    <= 0;
   end 
-  else if (count == 31'hffffffff)    // 29'h1fffffff
+  else if (count > 32'h0ffffffff)
   begin
     running <= 0;
     done    <= 1;
   end
   else if (enable) 
   begin
-    count   <= count + 1;
+    count   <= count + STEP;
     running <= 1;
-    done    <= 0;
-  end
-  else if (step) 
-  begin
-    count   <= count + 1;
-    running <= 0;
     done    <= 0;
   end
 end
